@@ -8,10 +8,12 @@ namespace AzureWebAppTest.Controllers
     public class HomeController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IConfiguration _config;
 
-        public HomeController(AppDbContext context)
+        public HomeController(AppDbContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
         public IActionResult Index()
         {
@@ -22,6 +24,8 @@ namespace AzureWebAppTest.Controllers
 
         public IActionResult Privacy()
         {
+            ViewBag.msg1 = _config.GetSection("Message1").Value;
+            ViewBag.msg2 = _config.GetSection("Message2").Value;
             return View();
         }
 
